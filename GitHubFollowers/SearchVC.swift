@@ -12,7 +12,7 @@ class SearchVC: UIViewController {
     
     let logoImageView = UIImageView()
     let usernameTextField = GFTextField()
-    let callActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Follower")
+    let callActionButton = GFButton(backgroundColor: .systemGreen, title: "Get Followers")
 
     
     override func viewDidLoad() {
@@ -21,6 +21,7 @@ class SearchVC: UIViewController {
         configureLogoImage()
         configureUsernameTextField()
         configureCallToActionButton()
+        createDismissKeyboardGesture()
     }
     
     
@@ -29,6 +30,11 @@ class SearchVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    
+    func createDismissKeyboardGesture() {
+        let tab = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tab)
+    }
     
     private func configureLogoImage() {
         view.addSubview(logoImageView)
