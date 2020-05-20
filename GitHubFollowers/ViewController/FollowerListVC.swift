@@ -44,30 +44,17 @@ class FollowerListVC: UIViewController {
     
     
     func configureCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createThreeCollumnFlowLayout())
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeCollumnFlowLayout(in: view))
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseId)
     }
+
     
-    
-    func createThreeCollumnFlowLayout() -> UICollectionViewFlowLayout{
-        let width = view.bounds.width
-        let padding: CGFloat = 12
-        let mininumItemSpacing: CGFloat = 10
-        let availableWidth = width - (padding * 2) - (mininumItemSpacing * 2)
-        let itemWidth = availableWidth / 3
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 40)
-        
-        
-        return flowLayout
-    }
     
     func getFollowers() {
-        NetworkManager.shared.getFollower(for: username, page: 1) { result in
+        NetworkManager.shared.getFollower(for: username, page: 1) { [weak self] result in
+            guard let self = self else { return }
             
             switch result {
                 
@@ -81,6 +68,7 @@ class FollowerListVC: UIViewController {
         }
     }
     
+    
     func configureDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Follower>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, follower) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FollowerCell.reuseId, for: indexPath) as! FollowerCell
@@ -88,6 +76,7 @@ class FollowerListVC: UIViewController {
             return cell
         })
     }
+    
     
     func updateData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()

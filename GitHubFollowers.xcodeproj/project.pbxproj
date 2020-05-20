@@ -11,6 +11,7 @@
 		436303DF2472CAE700A070E4 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436303DE2472CAE700A070E4 /* ErrorMessage.swift */; };
 		436303E22472F39A00A070E4 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436303E12472F39A00A070E4 /* FollowerCell.swift */; };
 		436303E42472F45700A070E4 /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436303E32472F45700A070E4 /* GFAvatarImageView.swift */; };
+		436303E62475088000A070E4 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436303E52475088000A070E4 /* UIHelper.swift */; };
 		43FF8ABC246FD3A000576ACC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FF8ABB246FD3A000576ACC /* AppDelegate.swift */; };
 		43FF8ABE246FD3A000576ACC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FF8ABD246FD3A000576ACC /* SceneDelegate.swift */; };
 		43FF8AC5246FD3A100576ACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43FF8AC4246FD3A100576ACC /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		436303DE2472CAE700A070E4 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		436303E12472F39A00A070E4 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		436303E32472F45700A070E4 /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
+		436303E52475088000A070E4 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
 		43FF8AB8246FD3A000576ACC /* GitHubFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43FF8ABB246FD3A000576ACC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43FF8ABD246FD3A000576ACC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXGroup;
 			children = (
 				436303DE2472CAE700A070E4 /* ErrorMessage.swift */,
+				436303E52475088000A070E4 /* UIHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 				43FF8AD2246FDAFD00576ACC /* FavoritesListVC.swift in Sources */,
 				43FF8AD4246FE46A00576ACC /* GFButton.swift in Sources */,
 				43FF8AE0247111D300576ACC /* UIViewController+Ext.swift in Sources */,
+				436303E62475088000A070E4 /* UIHelper.swift in Sources */,
 				436303E42472F45700A070E4 /* GFAvatarImageView.swift in Sources */,
 				43FF8AD0246FDAD600576ACC /* SearchVC.swift in Sources */,
 				43FF8ADE2470918B00576ACC /* GFAlertVC.swift in Sources */,
