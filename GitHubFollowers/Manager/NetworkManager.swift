@@ -16,31 +16,31 @@ class NetworkManager {
     
     private init() { }
     
-    func taskforGetData<ResponseType: Decodable>(url: URL,responseType: ResponseType.Type, completion: @escaping ([ResponseType]?, GFError?) -> Void) {
+    private func taskforGetData<ResponseType: Codable>(url: URL, responseType: ResponseType.Type, completion: @escaping (Result<ResponseType, GFError>) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let _ = error {
-                completion(nil, .unableToComplete)
+                completion(.failure(.unableToComplete))
                 return
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completion(nil, .invalidResponse)
+                completion(.failure(.invalidResponse))
                 return
             }
             
             guard let data = data else {
-                completion(nil, .invalidData)
+                completion(.failure(.invalidData))
                 return
             }
             
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                let object = try decoder.decode([ResponseType].self, from: data)
-                completion(object, nil)
+                print(String(data: data, encoding: .utf8)!)
+                let object = try decoder.decode(ResponseType.self, from: data)
+                completion(.success(object))
             } catch {
-                completion(nil, .invalidData)
+                completion(.failure(.invalidData))
             }
             
         }
@@ -49,7 +49,7 @@ class NetworkManager {
     }
     
     
-    func getUserInfo(for username: String, completion: @escaping (Result<[User], GFError>) -> Void) {
+    func getUserInfo(for username: String, completion: @escaping (Result<User, GFError>) -> Void) {
         let endPoint = baseUrl + "\(username)"
         
         guard let url = URL(string: endPoint) else {
@@ -57,12 +57,13 @@ class NetworkManager {
             return
         }
         
-        taskforGetData(url: url, responseType: User.self) { (username, error) in
-            guard let username = username else {
-                completion(.failure(error!))
-                return
+        taskforGetData(url: url, responseType: User.self) { result in
+            switch result {
+            case .success(let user):
+                completion(.success(user))
+            case .failure(let error):
+                completion(.failure(error))
             }
-            completion(.success(username))
         }
     }
     
@@ -74,12 +75,13 @@ class NetworkManager {
             return
         }
         
-        taskforGetData(url: url, responseType: Follower.self) { (followers, error) in
-            guard let followers = followers else {
-                completion(.failure(error!))
-                return
+        taskforGetData(url: url, responseType: [Follower].self) { result in
+            switch result {
+            case .success(let follower):
+                completion(.success(follower))
+            case .failure(let error):
+                completion(.failure(error))
             }
-            completion(.success(followers))
         }
     }
 }
