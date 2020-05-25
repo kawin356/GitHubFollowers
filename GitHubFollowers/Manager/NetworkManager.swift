@@ -16,6 +16,24 @@ class NetworkManager {
     
     private init() { }
     
+    enum Endpoint {
+        static let baseURL = "https://api.github.com/users/"
+        
+        case getUserInfo(String)
+        case getFollower(String, Int)
+        
+        var stringValue: String {
+            switch self {
+            case .getUserInfo(let username): return Endpoint.baseURL + "\(username)"
+            case .getFollower(let username, let page): return Endpoint.baseURL + "\(username)/followers?per_page=100&page=\(page)"
+            }
+        }
+        
+        var url: URL {
+            return URL(string: stringValue)!
+        }
+    }
+    
     private func taskforGetData<ResponseType: Codable>(url: URL, responseType: ResponseType.Type, completion: @escaping (Result<ResponseType, GFError>) -> Void) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if let _ = error {
@@ -50,12 +68,7 @@ class NetworkManager {
     
     
     func getUserInfo(for username: String, completion: @escaping (Result<User, GFError>) -> Void) {
-        let endPoint = baseUrl + "\(username)"
-        
-        guard let url = URL(string: endPoint) else {
-            completion(.failure(.unableToComplete))
-            return
-        }
+        let url = Endpoint.getUserInfo(username).url
         
         taskforGetData(url: url, responseType: User.self) { result in
             switch result {
@@ -68,12 +81,7 @@ class NetworkManager {
     }
     
     func getFollower(for username: String, page: Int, completion: @escaping (Result<[Follower], GFError>) -> Void) {
-        let endPoint = baseUrl + "\(username)/followers?per_page=100&page=\(page)"
-        
-        guard let url = URL(string: endPoint) else {
-            completion(.failure(.unableToComplete))
-            return
-        }
+        let url = Endpoint.getFollower(username, page).url
         
         taskforGetData(url: url, responseType: [Follower].self) { result in
             switch result {
