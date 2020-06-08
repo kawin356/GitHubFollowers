@@ -9,28 +9,28 @@
 import UIKit
 
 class UserInfoVC: UIViewController {
-
-    var username: String!
+  
+  var username: String!
+  
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = .systemBackground
     
+    let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
+    navigationItem.rightBarButtonItem = doneButton
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
-        navigationItem.rightBarButtonItem = doneButton
-        
-        NetworkManager.shared.getUserInfo(for: username) { (result) in
-            switch result {
-            case .success(let user):
-                print(user)
-            case .failure(let error):
-                self.presentGFAlertOnTheMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
-            }
-        }
+    NetworkManager.shared.getUserInfo(for: username) { (result) in
+      switch result {
+      case .success(let user):
+        print(user)
+      case .failure(let error):
+        self.presentGFAlertOnTheMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
+      }
     }
-    
-    @objc func dismissVC() {
-        dismiss(animated: true)
-    }
+  }
+  
+  @objc func dismissVC() {
+    dismiss(animated: true)
+  }
 }
