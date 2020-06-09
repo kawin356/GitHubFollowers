@@ -25,7 +25,10 @@ class UserInfoVC: UIViewController {
     NetworkManager.shared.getUserInfo(for: username) { (result) in
       switch result {
       case .success(let user):
-        print(user)
+        DispatchQueue.main.async {
+          self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+        }
+      
       case .failure(let error):
         self.presentGFAlertOnTheMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
       }
@@ -48,5 +51,12 @@ class UserInfoVC: UIViewController {
   
   @objc func dismissVC() {
     dismiss(animated: true)
+  }
+  
+  func add(childVC: UIViewController, to contrainerView: UIView){
+    addChild(childVC)
+    contrainerView.addSubview(childVC.view)
+    childVC.view.frame = contrainerView.bounds
+    childVC.didMove(toParent: self)
   }
 }
