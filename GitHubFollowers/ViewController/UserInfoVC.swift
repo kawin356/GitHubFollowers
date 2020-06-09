@@ -10,6 +10,8 @@ import UIKit
 
 class UserInfoVC: UIViewController {
   
+  let headerView = UIView()
+  
   var username: String!
   
   
@@ -28,6 +30,20 @@ class UserInfoVC: UIViewController {
         self.presentGFAlertOnTheMainThread(title: "Error", message: error.rawValue, buttonTitle: "Ok")
       }
     }
+    
+    layoutUI()
+  }
+  
+  func layoutUI() {
+    view.addSubview(headerView)
+    headerView.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+      headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      headerView.heightAnchor.constraint(equalToConstant: 180)
+    ])
   }
   
   @objc func dismissVC() {
